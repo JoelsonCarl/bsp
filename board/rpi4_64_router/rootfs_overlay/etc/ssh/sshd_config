@@ -1,0 +1,21 @@
+# Permit ssh-agent forwarding
+AllowAgentForwarding yes
+# Permit X11 forwarding
+X11Forwarding yes
+# Disable Challenge Response Authentication since no subsystem is setup for it
+ChallengeResponseAuthentication no
+
+# If no data is received in 30 seconds, send an encrypted message to the
+# client. If 4 messages are sent with no response, disconnect the client.
+ClientAliveCountMax 4
+ClientAliveInterval 30
+# Rely on the encrypted, non-spoofable keep alive
+TCPKeepAlive no
+
+# Do not allow login with passwords - keys only
+PasswordAuthentication no
+PermitEmptyPasswords no
+
+# Make sure root can only log in with keys
+PermitRootLogin prohibit-password
+Subsystem sftp /usr/libexec/sftp-server

@@ -1,0 +1,25 @@
+#!/bin/sh
+#
+# Restore iptables rules
+#
+
+case "$1" in
+start)
+	printf "Restoring iptables: "
+	iptables-restore < /etc/iptables.rules
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+	printf "Restoring ip6tables: "
+	ip6tables-restore < /etc/ip6tables.rules
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+	;;
+stop)
+	# Nothing to do
+	;;
+restart|reload)
+	"$0" stop
+	"$0" start
+	;;
+*)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac

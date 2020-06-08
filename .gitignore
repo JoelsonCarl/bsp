@@ -1,0 +1,3 @@
+*.swp
+board/**/ssh/ssh_host*
+board/*/private_config.sh

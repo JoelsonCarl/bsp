@@ -1,0 +1,30 @@
+#!/bin/sh
+#
+# Start eth1, eth2, and wlan0 interfaces (don't want them to start until after
+# the main eth0 interface is running).
+
+case "$1" in
+start)
+	echo "Starting eth1"
+	ifup eth1
+	echo "Starting eth2"
+	ifup eth2
+	echo "Starting wlan0"
+	ifup wlan0
+	;;
+stop)
+	echo "Stopping eth1"
+	ifdown eth1
+	echo "Stopping eth2"
+	ifdown eth2
+	echo "Stopping wlan0"
+	ifdown wlan0
+	;;
+restart|reload)
+	"$0" stop
+	"$0" start
+	;;
+*)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac

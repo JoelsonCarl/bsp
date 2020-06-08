@@ -1,0 +1,40 @@
+# See package/makedevs/README for details
+#
+# This device table is used to assign proper ownership and permissions
+# on various files. It doesn't create any device file, as it is used
+# in both static device configurations (where /dev/ is static) and in
+# dynamic configurations (where devtmpfs, mdev or udev are used).
+#
+# <name>                                <type>  <mode>  <uid>   <gid>   <major> <minor> <start> <inc>   <count>
+/etc                                    d       755     0       0       -       -       -       -       -
+/etc/dhclient-enter-hooks               f       755     0       0       -       -       -       -       -
+/etc/dhclient-exit-hooks                f       755     0       0       -       -       -       -       -
+/etc/dhcp                               d       755     0       0       -       -       -       -       -
+/etc/dhcp/dhclient.conf                 f       644     0       0       -       -       -       -       -
+/etc/dnsmasq.conf                       f       644     0       0       -       -       -       -       -
+/etc/hostapd.conf                       f       600     0       0       -       -       -       -       -
+/etc/init.d                             d       755     0       0       -       -       -       -       -
+/etc/init.d/S02sysctl                   f       755     0       0       -       -       -       -       -
+/etc/init.d/S35usbeth                   f       755     0       0       -       -       -       -       -
+/etc/init.d/S39iptables                 f       755     0       0       -       -       -       -       -
+/etc/init.d/S70hostapd                  f       755     0       0       -       -       -       -       -
+/etc/init.d/S75clients                  f       755     0       0       -       -       -       -       -
+/etc/iptables.rules                     f       644     0       0       -       -       -       -       -
+/etc/ip6tables.rules                    f       644     0       0       -       -       -       -       -
+/etc/network                            d       755     0       0       -       -       -       -       -
+/etc/network/interfaces                 f       644     0       0       -       -       -       -       -
+/etc/ssh                                d       755     0       0       -       -       -       -       -
+/etc/ssh/ssh_host_dsa_key               f       600     0       0       -       -       -       -       -
+/etc/ssh/ssh_host_dsa_key.pub           f       644     0       0       -       -       -       -       -
+/etc/ssh/ssh_host_ecdsa_key             f       600     0       0       -       -       -       -       -
+/etc/ssh/ssh_host_ecdsa_key.pub         f       644     0       0       -       -       -       -       -
+/etc/ssh/ssh_host_ed25519_key           f       600     0       0       -       -       -       -       -
+/etc/ssh/ssh_host_ed25519_key.pub       f       644     0       0       -       -       -       -       -
+/etc/ssh/ssh_host_rsa_key               f       600     0       0       -       -       -       -       -
+/etc/ssh/ssh_host_rsa_key.pub           f       644     0       0       -       -       -       -       -
+/etc/ssh/sshd_config                    f       644     0       0       -       -       -       -       -
+/etc/sysctl.conf                        f       644     0       0       -       -       -       -       -
+/etc/wpa_supplicant.conf                f       600     0       0       -       -       -       -       -
+/root                                   d       700     0       0       -       -       -       -       -
+/root/.ssh                              d       700     0       0       -       -       -       -       -
+/root/.ssh/authorized_keys              f       600     0       0       -       -       -       -       -

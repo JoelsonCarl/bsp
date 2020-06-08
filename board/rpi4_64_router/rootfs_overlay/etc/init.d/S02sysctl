@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# Overwrite default buildroot (busybox) sysctl init file
+
+case "$1" in
+start)
+	# Make sure ipv6 is enabled (module in rpi4 default build?)
+	# Without ipv6, sysctl net.ipv6.* settings fail
+	modprobe ipv6
+	printf "Running sysctl: "
+	if sysctl -q -p /etc/sysctl.conf; then
+		echo "OK"
+	else
+		echo "FAIL"
+	fi
+	;;
+stop)
+	# Nothing to do
+	;;
+restart|reload)
+	"$0" stop
+	"$0" start
+	;;
+*)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac

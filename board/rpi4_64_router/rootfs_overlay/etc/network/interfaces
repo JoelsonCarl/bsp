@@ -1,0 +1,56 @@
+auto lo
+iface lo inet loopback
+
+# Allow bringup of WAN-side during boot
+auto eth0
+
+# WAN-side, IPv4 via DHCP from ISP
+iface eth0 inet dhcp
+
+# WAN-side, IPv6 from ISP, requesting prefix
+#
+# Note the below manual commands are intended to simulate what happens with
+# an entry of:
+#     iface eth0 inet6 auto
+#             accept_ra 2
+#             dhcp 1
+#             request_prefix 1
+# Except that ifupdown currently provides no way to specify the
+# --prefix-len-hint argument to dhclient. So this manual method adds the prefix
+# length hint, and also leaves out some other unnecessary steps.
+#
+# With my testing on comcast, I requested a /56 but it gave me a /60, but that
+# will still work for my purposes.
+iface eth0 inet6 manual
+	up /sbin/ip link set dev eth0 up
+	up IFACE=eth0 /lib/ifupdown/wait-for-ll6.sh
+	up /sbin/dhclient -6 -P --prefix-len-hint 56 -pf /run/dhclient6.eth0.pid -lf /var/lib/dhcp/dhclient6.eth0.leases -I -df /var/lib/dhcp/dhclient.eth0.leases eth0
+	down /sbin/ip -6 addr flush dev eth0 scope global
+	down /sbin/ip link set dev eth0 down
+	down kill -TERM $(cat /run/dhclient6.eth0.pid)
+
+# LAN-side 1, IPv4
+iface eth1 inet static
+	address 192.168.14.1/24
+
+# LAN-side 1, IPv6
+# dhclient-exit-hooks on reaction to prefix-allocation sets an address
+iface eth1 inet6 manual
+
+# LAN-side 2, IPv4
+iface eth2 inet static
+	address 192.168.15.1/24
+
+# LAN-side 2, IPv6
+# dhclient-exit-hooks on reaction to prefix-allocation sets an address
+iface eth2 inet6 manual
+
+# LAN-side wifi, IPv4
+iface wlan0 inet static
+	address 192.168.16.1/24
+	pre-up wpa_supplicant -B -D nl80211 -i wlan0 -c /etc/wpa_supplicant.conf
+	post-down killall -q wpa_supplicant
+	wait-delay 15
+
+# LAN-side wifi, IPv6
+iface wlan0 inet6 manual

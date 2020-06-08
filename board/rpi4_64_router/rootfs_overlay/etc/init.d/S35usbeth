@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# Insert modules for usb-eth
+#
+
+case "$1" in
+start)
+	printf "Inserting usb-eth module: "
+	modprobe ax88179_178a
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+	;;
+stop)
+	# Nothing to do
+	;;
+restart|reload)
+	"$0" stop
+	"$0" start
+	;;
+*)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac

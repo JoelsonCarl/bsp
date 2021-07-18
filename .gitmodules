@@ -1,0 +1,3 @@
+[submodule "externals/buildroot"]
+	path = externals/buildroot
+	url = git://git.buildroot.net/buildroot

@@ -1,0 +1,25 @@
+#!/bin/sh
+
+[ -d /etc/dnsmasq.d ] || exit 0
+
+case "$1" in
+	start)
+		printf "Getting StevenBlack/hosts blocklist: "
+		if curl https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | \
+			awk '$1 == "0.0.0.0" {print "address=/"$2"/0.0.0.0/"}' > \
+			/etc/dnsmasq.d/StevenBlackHosts.blocklist.conf; then
+			echo "OK"
+		else
+			echo "FAIL"
+		fi
+		;;
+	stop)
+		# Nothing to do
+		;;
+	restart|reload)
+		$0 start
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+		exit 1
+esac

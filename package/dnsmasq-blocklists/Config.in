@@ -1,0 +1,46 @@
+comment "dnsmasq blocklists requires dnsmasq"
+	depends on !BR2_PACKAGE_DNSMASQ
+
+config BR2_PACKAGE_DNSMASQ_BLOCKLISTS
+	bool "Install blocklists for dnsmasq"
+	depends on BR2_PACKAGE_DNSMASQ
+	help
+	  Install blocklists for dnsmasq
+
+if BR2_PACKAGE_DNSMASQ_BLOCKLISTS
+
+config BR2_PACKAGE_DNSMASQ_BLOCKLISTS_INSTALL_DIR
+	string "Target install directory"
+	default "/etc/dnsmasq.d"
+	help
+	  Where blocklists will get installed on the target. Make sure
+	  your system's dnsmasq.conf has a configuration option of
+	  'conf-dir=<directory>' that matches this setting for the
+	  blocklists to be used. Default "/etc/dnsmasq.d"
+
+comment "StevenBlack Hosts requires BusyBox or systemV init, curl"
+	depends on !BR2_INIT_BUSYBOX && !BR2_INIT_SYSV || \
+		!BR2_PACKAGE_LIBCURL_CURL
+
+config BR2_PACKAGE_DNSMASQ_BLOCKLISTS_STEVEN_BLACK_HOSTS_DYNAMIC
+	bool "Dynamic StevenBlack Unified hosts list"
+	depends on BR2_INIT_BUSYBOX || BR2_INIT_SYSV
+	depends on BR2_PACKAGE_LIBCURL_CURL
+	help
+	  The Unified hosts (adware + malware) list from StevenBlack/hosts
+	  on github. An init script will be installed that during boot will
+	  grab the latest version from github.
+
+	  https://github.com/StevenBlack/hosts
+
+if BR2_PACKAGE_DNSMASQ_BLOCKLISTS_STEVEN_BLACK_HOSTS_DYNAMIC
+config BR2_PACKAGE_DNSMASQ_BLOCKLISTS_STEVEN_BLACK_HOSTS_DYNAMIC_INIT_NUM
+	string "Init script number"
+	default "79"
+	help
+	  Which init script number to use when installing the script.
+	  Default is 79, as the default dnsmasq init script installed by
+	  the dnsmasq package is 80.
+endif
+
+endif

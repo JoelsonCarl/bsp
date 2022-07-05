@@ -10,3 +10,7 @@ if [ -f "${board_dir}/private_config.sh" ]; then
 	# shellcheck disable=SC1090
 	source "${board_dir}/private_config.sh"
 fi
+
+# After buildroot 2021.08, the iptables package started installing an S35 init
+# script that we do not need because we have our own. Remove it.
+rm -f "${TARGET_DIR}/etc/init.d/S35iptables"

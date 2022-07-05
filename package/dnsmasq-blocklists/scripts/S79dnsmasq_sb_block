@@ -5,7 +5,7 @@
 case "$1" in
 	start)
 		printf "Getting StevenBlack/hosts blocklist: "
-		if curl https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | \
+		if curl --insecure https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | \
 			awk '$1 == "0.0.0.0" {print "address=/"$2"/0.0.0.0/"}' > \
 			/etc/dnsmasq.d/StevenBlackHosts.blocklist.conf; then
 			echo "OK"

@@ -4,6 +4,9 @@ use buildroot to build the BSPs, so a familiarity or understanding of buildroot 
 though I intend to try and set things up so that one can run a build with a single command and most
 everything should be taken care of.
 
+Make sure to initialize the buildroot git submodule (in `externals/buildroot`), or the build won't
+work correctly.
+
 Further information on buildroot can be read in its manual:<br>
 https://buildroot.org/downloads/manual/manual.html
 

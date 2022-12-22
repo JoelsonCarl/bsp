@@ -1,0 +1,19 @@
+comment "No-IP DUC requires BusyBox or systemV init"
+	depends on !BR2_INIT_BUSYBOX && !BR2_INIT_SYSV
+
+config BR2_PACKAGE_NOIP_DUC
+	bool "No-IP DUC"
+	depends on BR2_INIT_BUSYBOX || BR2_INIT_SYSV
+	help
+	  Installs the No-IP Dynamic Update Client (DUC)
+
+if BR2_PACKAGE_NOIP_DUC
+
+config BR2_PACKAGE_NOIP_DUC_INIT_NUM
+	string "Init script number"
+	default "90"
+	help
+	  Which init script number to use when installing the startup
+	  script. Default is 90.
+
+endif

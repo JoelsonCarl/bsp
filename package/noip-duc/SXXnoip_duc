@@ -1,0 +1,22 @@
+#!/bin/sh
+
+DAEMON=/usr/bin/noip2
+CONF=/etc/no-ip2.conf
+
+case "$1" in
+start)
+	echo "Starting noip2"
+	${DAEMON} -c ${CONF}
+	;;
+stop)
+	echo "Shutting down noip2"
+	killall -TERM ${DAEMON}
+	;;
+restart)
+	$0 stop
+	$0 start
+	;;
+*)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac

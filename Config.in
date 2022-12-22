@@ -1,1 +1,2 @@
 source "$BR2_EXTERNAL_JOELSONCARL_PATH/package/dnsmasq-blocklists/Config.in"
+source "$BR2_EXTERNAL_JOELSONCARL_PATH/package/noip-duc/Config.in"

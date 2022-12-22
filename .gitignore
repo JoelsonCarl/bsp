@@ -1,6 +1,7 @@
 # Private files for the build that should not be shared with the world
 board/**/ssh/ssh_host*
 board/*/private_config.sh
+board/**/etc/no-ip2.conf
 
 # Build directory
 builds/

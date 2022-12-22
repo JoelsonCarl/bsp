@@ -56,6 +56,20 @@ create a file `board/rpi4_64_router/private_config.sh` which will be called by a
 and can fix up these settings so one can keep the repo files more similar to what is in this
 original repository.
 
+One must create a No-IP DUC configuration file to be loaded via the rootfs overlay into `etc`. The
+gitignore file is setup to ignore this file so you can't accidentally commit it, as it contains the
+email and password needed to talk to No-IP servers. To create the configuration file on your local
+machine, do the following:<br>
+```
+user@pc:~$ wget http://www.noip.com/client/linux/noip-duc-linux.tar.gz
+user@pc:~$ tar xf noip-duc-linux.tar.gz
+user@pc:~$ cd noip-2.1.9-1/
+user@pc:~/noip-2.1.9-1$ make
+user@pc:~/noip-2.1.9-1$ ./noip2 -C -c ./no-ip2.conf
+# Follow instructions on the command line
+```
+You can then copy `~/noip-2.1.9-1/no-ip2.conf` to `board/rpi4_64_router/rootfs_overlay/etc`.
+
 Optionally, one can also add keys to `board/rpi4_64_router/rootfs_overlay/etc/ssh` by running:<br>
 ```
 ssh-keygen -A -f /path/to/bsp-repo/board/raspberrypi4_router/rootfs_overlay
